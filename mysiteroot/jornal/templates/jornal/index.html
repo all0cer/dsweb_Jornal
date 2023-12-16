@@ -1,0 +1,28 @@
+{% load static %}
+
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <title>Jornal DSweb</title>
+    </head>
+    <nav>
+        <ul>
+          {% block nav %}
+          <li><a href="{% url  'jornal:cadastro' %}">Cadastro</a></li>
+          
+          {% endblock %}
+        </ul>
+      </nav>
+    <body>
+
+    {% if noticias_recentes %}
+        {% for noticia in noticias_recentes %}
+                <h1>{{ noticia.titulo }} - {{ noticia.edicao }}</h1>
+                <p>{{ noticia.texto_noticia }}</p>
+        {% endfor %}
+        </ul>
+        {% else %}
+         <p>Nenhuma notícia disponível.</p>
+    {% endif %}
+   </body>
+</html>
