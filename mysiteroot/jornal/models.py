@@ -21,6 +21,7 @@ class Noticia(models.Model):
     data_noticia = models.DateField(default=timezone.now)
 
 class Comentario(models.Model):
+    noticia = models.ForeignKey(Noticia, on_delete=models.CASCADE, null=True, blank=True)
     texto_comentario = models.CharField(max_length=255)
 
 
