@@ -1,4 +1,5 @@
 from django.views import View
+from django.contrib.auth.views import LoginView
 from django.views import generic
 from .models import Noticia, Usuario, User
 from django.utils import timezone
@@ -43,3 +44,6 @@ class CadastroView(View):  # Herde da classe View
 
         return render(request, self.template_name, {'form': form})
 
+class LoginView(LoginView):
+    template = 'login.html'
+    

@@ -1,0 +1,16 @@
+<h2>Login</h2>
+  <form method="post" action="{% url 'jornal:login' %}">
+    {% csrf_token %}
+    <div class="form-row">  {# ou use <tr class="form-row"> se o layout for de tabela #}
+      {{ form.username.label_tag }} {{ form.username }}
+    </div>
+    <div class="form-row">
+      {{ form.password.label_tag }} {{ form.password }}
+    </div>
+    <div class="form-row">
+      {{ form.non_field_errors }}
+    </div>
+    <div class="form-row">
+      <input type="submit" value="Login">
+    </div>
+  </form>

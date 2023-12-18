@@ -6,4 +6,5 @@ app_name = 'jornal'  #É usado para identificar as URLS pelos nomes invés de to
 urlpatterns = [
         path('index/', views.IndexView.as_view(), name='index'),
         path('cadastro/', views.CadastroView.as_view(), name='cadastro'),
+        path('login/', views.LoginView.as_view(), name='login'),
     ]
