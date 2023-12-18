@@ -4,6 +4,18 @@
 
 
 <h2>Comentários</h2>
+{% if user.is_authenticated %}
+  <h2>Escreva um Comentário</h2>
+  <form method="post" action="{% url 'jornal:comentar' noticia.id %}">
+    {% csrf_token %}
+    <textarea name="texto_comentario" rows="4" cols="50" placeholder="Digite seu comentário"></textarea>
+    <br>
+    <input type="submit" value="Enviar Comentário">
+  </form>
+{% else %}
+  <p>Faça login para escrever um comentário.</p>
+{% endif %}
+
 {% if noticia.comentario_set.all %}
   <ul>
     {% for comentario in noticia.comentario_set.all %}

@@ -2,7 +2,7 @@ from django.views import View
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout
 from django.views import generic
-from .models import Noticia, Usuario, User
+from .models import Noticia, Usuario, User, Comentario
 from django.utils import timezone
 from .forms import FormularioCadastro
 from django.shortcuts import render, redirect
@@ -56,3 +56,13 @@ def LogoutView(request):
 class NoticiaDetailView(generic.DetailView):
     model = Noticia
     template_name = "noticia_detalhe.html"
+
+def ComentarView(request, noticia_id):
+    noticia =  Noticia.get_object_or_404(noticia_id)
+
+    if request.method == 'POST':
+        texto_comentario = request.POST.get('texto_comentario')
+        if texto_comentario:
+            comentario = Comentario(noticia=noticia, texto_comentario=texto_comentario)
+            comentario.save()
+    return redirect('noticia_detalhe', noticia_id=noticia_id)
