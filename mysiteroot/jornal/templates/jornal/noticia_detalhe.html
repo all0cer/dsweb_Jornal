@@ -1,0 +1,15 @@
+{% load static %}
+<h1>{{ noticia.titulo }} - Data: {{  noticia.data_noticia }}</h1>
+<p>{{ noticia.texto_noticia }} </p>
+
+
+<h2>Comentários</h2>
+{% if noticia.comentario_set.all %}
+  <ul>
+    {% for comentario in noticia.comentario_set.all %}
+      <li>{{ comentario.texto_comentario }}</li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>Não há comentários para esta notícia.</p>
+{% endif %}

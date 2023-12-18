@@ -1,5 +1,6 @@
 from django.views import View
 from django.contrib.auth.views import LoginView
+from django.contrib.auth import logout
 from django.views import generic
 from .models import Noticia, Usuario, User
 from django.utils import timezone
@@ -44,6 +45,14 @@ class CadastroView(View):  # Herde da classe View
 
         return render(request, self.template_name, {'form': form})
 
-class LoginView(LoginView):
-    template = 'login.html'
-    
+class LoginView(LoginView): # Cria formulário já com authenticate() e get() e post()
+    template_name = 'login.html'
+
+def LogoutView(request):
+    logout(request)
+
+    return redirect('jornal:index')
+
+class NoticiaDetailView(generic.DetailView):
+    model = Noticia
+    template_name = "noticia_detalhe.html"
