@@ -6,7 +6,7 @@
 <h2>Comentários</h2>
 {% if user.is_authenticated %}
   <h2>Escreva um Comentário</h2>
-  <form method="post" action="{% url 'jornal:comentar' noticia.id %}">
+  <form method="post" action="{% url 'jornal:comentar' pk=noticia.id %}">
     {% csrf_token %}
     <textarea name="texto_comentario" rows="4" cols="50" placeholder="Digite seu comentário"></textarea>
     <br>

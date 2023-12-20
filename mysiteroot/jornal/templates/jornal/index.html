@@ -17,7 +17,7 @@
 
     {% if noticias_recentes %}
         {% for noticia in noticias_recentes %}
-                <h1>{{ noticia.titulo }} - {{ noticia.edicao }}</h1>
+        <a href="{% url  'jornal:noticia_detalhe' noticia.id %}">{{ noticia.titulo }}</a> - <h1>{{ noticia.edicao }}</h1>
                 <p>{{ noticia.texto_noticia }}</p>
         {% endfor %}
         </ul>

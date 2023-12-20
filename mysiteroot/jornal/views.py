@@ -28,16 +28,13 @@ class CadastroView(View):  # Herde da classe View
         if form.is_valid():
 
             novo_usuario = User.objects.create_user(
-                username=form.cleaned_data['email'],
+                username=form.cleaned_data['nome'],
                 email=form.cleaned_data['email'],
                 password=form.cleaned_data['senha'],
             )
             usuario = Usuario(
                 user=novo_usuario,
-                nome=form.cleaned_data['nome'],
                 sobrenome=form.cleaned_data['sobrenome'],
-                email=form.cleaned_data['email'],
-                senha=form.cleaned_data['senha'],
             )
 
             usuario.save()
@@ -55,14 +52,14 @@ def LogoutView(request):
 
 class NoticiaDetailView(generic.DetailView):
     model = Noticia
-    template_name = "noticia_detalhe.html"
+    template_name = "jornal/noticia_detalhe.html"
 
-def ComentarView(request, noticia_id):
-    noticia =  Noticia.get_object_or_404(noticia_id)
+def ComentarView(request, pk):
+    noticia = Noticia.objects.get(pk=pk)
 
     if request.method == 'POST':
         texto_comentario = request.POST.get('texto_comentario')
         if texto_comentario:
             comentario = Comentario(noticia=noticia, texto_comentario=texto_comentario)
             comentario.save()
-    return redirect('noticia_detalhe', noticia_id=noticia_id)
+    return redirect('jornal:noticia_detalhe', pk=pk)
