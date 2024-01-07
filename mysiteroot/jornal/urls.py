@@ -10,4 +10,6 @@ urlpatterns = [
         path('noticia/<int:pk>', views.NoticiaDetailView.as_view(), name='noticia_detalhe'),
         path('logout/', views.LogoutView, name='logout'),
         path('comentar/<int:pk>', views.ComentarView, name='comentar'),
+        path('edicoes/', views.ListarEdicoesView.as_view(), name='listar_edicoes'),
+        path('noticias/<int:pk>', views.ListarNoticiaPorEdicaoView.as_view(), name='listar_noticias'),
 ]

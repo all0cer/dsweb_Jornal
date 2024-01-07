@@ -1,0 +1,12 @@
+{% load static %}
+
+<h1>Edições<h1>
+{% if edicoes %}
+    {% for edicao in edicoes %}
+        <a href="{% url  'jornal:listar_noticias' edicao.id %}">{{ edicao.titulo_edicao }}</a>
+                <p>{{ noticia.texto_noticia }}</p>
+        {% endfor %}
+        </ul>
+        {% else %}
+         <p>Nenhuma edição disponível.</p>
+{% endif %}
