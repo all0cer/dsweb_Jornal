@@ -12,4 +12,5 @@ urlpatterns = [
         path('comentar/<int:pk>', views.ComentarView, name='comentar'),
         path('edicoes/', views.ListarEdicoesView.as_view(), name='listar_edicoes'),
         path('noticias/<int:pk>', views.ListarNoticiaPorEdicaoView.as_view(), name='listar_noticias'),
+        path('nova-noticia/', views.CadastrarNoticiaView.as_view(), name='nova-noticia'),
 ]

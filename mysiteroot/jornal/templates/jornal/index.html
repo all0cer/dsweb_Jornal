@@ -9,6 +9,13 @@
         <ul>
           {% block nav %}
           <li><a href="{% url  'jornal:cadastro' %}">Cadastro</a></li>
+          {% if user.is_authenticated %}
+          {% comment %} <li><a href="{% url  'jornal:nova_noticia' %}">Criar Noticia</a></li> {% endcomment %}
+          <li><a href="{% url  'jornal:logout' %}">Sair</a></li>
+          {% else %}
+          <li><a href="{% url  'jornal:login' %}">Entrar</a></li>
+          {% endif %}
+          <li><a href="{% url  'jornal:nova-noticia' %}">Criar Noticia</a></li>
           <l1><a href="{% url 'jornal:listar_edicoes' %}">Edições</a></li>
           {% endblock %}
         </ul>
@@ -17,7 +24,8 @@
 
     {% if noticias_recentes %}
         {% for noticia in noticias_recentes %}
-        <a href="{% url  'jornal:noticia_detalhe' noticia.id %}">{{ noticia.titulo }}</a> - <h1>{{ noticia.edicao }}</h1>
+        <h3>{{ noticia.edicao }}</h3>
+        <a href="{% url  'jornal:noticia_detalhe' noticia.id %}">{{ noticia.titulo }} -</a>
                 <p>{{ noticia.texto_noticia }}</p>
         {% endfor %}
         </ul>

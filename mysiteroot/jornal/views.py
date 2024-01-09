@@ -4,17 +4,17 @@ from django.contrib.auth import logout
 from django.views import generic
 from .models import Noticia, Usuario, User, Comentario, Edicao
 from django.utils import timezone
-from .forms import FormularioCadastro
+from .forms import FormularioCadastro, FormularioNoticia
 from django.shortcuts import render, redirect
 
 class IndexView(generic.ListView):
-    model = Noticia
+    model = Edicao
     template_name = 'jornal/index.html'
     context_object_name = 'noticias_recentes'
 
-    def get_queryset(self): #Retorna as 9 notícias mais recentes
-        return Noticia.objects.filter(
-            data_noticia__lte = timezone.now()).order_by('-data_noticia')[:9]
+    def get_queryset(self):
+        ultima_edicao =  Edicao.objects.latest('data_edicao')
+        return ultima_edicao.noticia_set.all()[0:5]
 
 class CadastroView(View):  # Herde da classe View
     template_name = 'jornal/cadastro.html'
@@ -43,7 +43,7 @@ class CadastroView(View):  # Herde da classe View
         return render(request, self.template_name, {'form': form})
 
 class LoginView(LoginView): # Cria formulário já com authenticate() e get() e post()
-    template_name = 'login.html'
+    template_name = 'registration/login.html'
 
 def LogoutView(request):
     logout(request)
@@ -77,6 +77,25 @@ class ListarNoticiaPorEdicaoView(View):
         noticias_edicao = edicao.noticia_set.all()
         return render(request, self.template_name , {'noticias_edicao': noticias_edicao})
             
+class CadastrarNoticiaView(View):
+    template_name = 'jornal/cadastro_noticia.html'
+
+    def get(self, request):
+        form = FormularioNoticia()
+        return render(request, self.template_name, {'form': form})
+    
+    def post(self, request):
+        form = FormularioNoticia(request.POST)
+        if form.is_valid():
+            nova_noticia = Noticia.objects.create(
+                edicao=form.cleaned_data['edicao'],
+                titulo=form.cleaned_data['titulo'],
+                texto_noticia=form.cleaned_data['texto_noticia'],
+                data_noticia=form.cleaned_data['data_noticia'],
+            )
+            nova_noticia.save()
+            return redirect('jornal:index')
+        return render(request, self.template_name, {'form': form})
         
 
     
